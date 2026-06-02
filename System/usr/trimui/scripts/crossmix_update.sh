@@ -135,9 +135,13 @@ total_files=$(/tmp/7zz l "$UPDATE_FILE" | grep -c "\.\.\..*" 2>/dev/null || echo
 echo "CrossMix archive contains ~$total_files files. Extraction lasts ~4 minutes."
 echo -e "\n\n     !!!!!! Please be patient  !!!!!! \n\n"
 
+# Extract to temp directory for atomic swap (avoids broken state if power lost mid-extraction)
+EXTRACT_DIR="/mnt/SDCARD/_Updates/New_CrossMix_v${update_version}_${timestamp}"
+mkdir -p "$EXTRACT_DIR"
+
 # Extract with progress counter
 count=0
-/tmp/7zz x -aoa "$UPDATE_FILE" -o"/mnt/SDCARD" 2>&1 | while IFS= read -r line; do
+/tmp/7zz x -aoa "$UPDATE_FILE" -o"$EXTRACT_DIR" 2>&1 | while IFS= read -r line; do
     if echo "$line" | grep -q "^\- "; then
         count=$((count + 1))
         if [ $((count % 100)) -eq 0 ] && [ "$total_files" != "?" ]; then
@@ -151,12 +155,24 @@ sync
 
 if [ $extract_rc -eq 0 ]; then
   echo -e "${GREEN}CrossMix v$update_version extraction successful.${NC}"
+  echo "${BLUE}Applying update atomically...${NC}"
+  # Atomic swap: move new files to SD root (same filesystem = atomic per file)
+  for item in "$EXTRACT_DIR"/*; do
+      item_name=$(basename "$item")
+      if [ "$item_name" != "_Updates" ]; then
+          mv -f "$item" "/mnt/SDCARD/" 2>/dev/null
+      fi
+  done
+  rmdir "$EXTRACT_DIR" 2>/dev/null
+  sync
+  echo -e "${GREEN}Update applied.${NC}"
   mv "$UPDATE_FILE" "/mnt/SDCARD/_Updates"
   if [ -f "$SHA256_FILE" ]; then
       mv "$SHA256_FILE" "/mnt/SDCARD/_Updates"
   fi
 else
   echo -ne "${RED}CrossMix v$update_version extraction FAILED (exit code: $extract_rc).${NC}\n"
+  rm -rf "$EXTRACT_DIR"
   rollback_update "extraction"
 fi
 

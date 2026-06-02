@@ -232,7 +232,7 @@ download_file() {
 
     # Download the file
     echo -e "\n${BLUE}==== Downloading: $display_name ====${NC}"
-    wget --quiet --show-progress -O "$temp_file" "$url"
+    wget -c --quiet --show-progress -O "$temp_file" "$url"
     if [ $? -eq 0 ] && [ -f "$temp_file" ]; then
         mv "$temp_file" "$destination_file"
         sync
