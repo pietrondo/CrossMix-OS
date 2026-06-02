@@ -1,1 +1,0 @@
-{"label":"J2ME","launch":"launch.sh","rompath":"../../Roms/J2ME","extlist":"jar|jad|zip|7z","launchlist":[{"name":"FreeJ2ME","launch":"freej2me.sh"}]}

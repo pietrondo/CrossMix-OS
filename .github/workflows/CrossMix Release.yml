@@ -31,6 +31,21 @@ jobs:
       - name: Extract RetroArch cores
         run: |
           find /home/runner/work/CrossMix-OS/CrossMix-OS/RetroArch/.retroarch/cores -name "*.7z" -execdir 7zz x {} \; -execdir rm {} \;
+      - name: Download large cores from upstream
+        run: |
+          CORES_URL="https://raw.githubusercontent.com/christianhaitian/retroarch-cores/master/aarch64"
+          CORES_DIR="/home/runner/work/CrossMix-OS/CrossMix-OS/RetroArch/.retroarch/cores"
+          # Large cores not in git but available upstream
+          LARGE_CORES="fbalpha2012 fbneo flycast flycast_rumble mame mame2003 mame2003_plus mame2010 mame2015 mess mess2015 puae same_cdi scummvm"
+          for core in $LARGE_CORES; do
+            so_file="${core}_libretro.so"
+            if [ ! -f "$CORES_DIR/$so_file" ]; then
+              echo "Downloading $so_file..."
+              wget -q "$CORES_URL/${so_file}.zip" -O "/tmp/${so_file}.zip" && \
+              7zz x "/tmp/${so_file}.zip" -o"$CORES_DIR" -aoa && \
+              rm "/tmp/${so_file}.zip" && echo "  OK: $so_file" || echo "  FAIL: $so_file"
+            fi
+          done
       - name: Cleaning image...
         run: |
           find /home/runner/work/CrossMix-OS/CrossMix-OS -type f -name ".gitkeep" -delete
