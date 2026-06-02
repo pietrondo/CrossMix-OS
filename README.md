@@ -63,6 +63,14 @@ First take a look to CrossMix Wiki, below are the different sections:
 
 ## ❔ [FAQ](https://github.com/cizia64/CrossMix-OS/wiki/FAQ)
 
+## 🔄 [Updating CrossMix-OS](https://github.com/cizia64/CrossMix-OS/wiki/Updating)
+
+Three ways to get the latest version:
+
+1. **Updates App** (SD card, no WiFi needed): Download `CrossMix-OS_v*.zip` from [Releases](https://github.com/cizia64/CrossMix-OS/releases/latest) on your PC, copy to SD root, then open **Apps > Updates** on your device.
+2. **OTA Update** (WiFi required): Connect to WiFi, then open **Apps > OTA update**.
+3. **Auto-detection at boot**: If a `CrossMix-OS_v*.zip` is on the SD root, the system prompts to install at boot.
+
 ## 🔧 [Advanced Guides](https://github.com/cizia64/CrossMix-OS/wiki/Advanced-Guides)
 
 ## 🛈 [About](https://github.com/cizia64/CrossMix-OS/wiki/About)

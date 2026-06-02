@@ -1,0 +1,7 @@
+{
+"label":"Updates",
+"icon":"icon.png",
+"iconsel":"icon.png",
+"launch":"launch.sh",
+"description":"Install CrossMix updates from SD card or internet."
+}
