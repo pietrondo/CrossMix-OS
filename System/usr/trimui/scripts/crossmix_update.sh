@@ -1,6 +1,28 @@
 #!/bin/sh
 set -u
 
+# Rollback handler: called on critical failure or trap
+rollback_update() {
+    echo "${RED}!!! Update failed at step: $1 !!!${NC}"
+    echo "Attempting rollback from $BCK_DIR..."
+    if [ -d "$BCK_DIR" ] && [ "$(ls -A "$BCK_DIR" 2>/dev/null)" ]; then
+        for item in "$BCK_DIR"/*; do
+            item_name=$(basename "$item")
+            if [ "$item_name" != "ReadMe.txt" ]; then
+                mv -f "$item" "/mnt/SDCARD/" 2>/dev/null
+            fi
+        done
+        sync
+        echo "${GREEN}Rollback completed. Previous version restored.${NC}"
+    else
+        echo "${YELLOW}No backup found, rollback not possible.${NC}"
+    fi
+    echo -ne "${YELLOW}"
+    read -n 1 -s -r -p "Press A to reboot"
+    reboot
+    exit 1
+}
+
 UPDATE_FILE=$(find /mnt/SDCARD -maxdepth 1 -name "CrossMix-OS_v*.zip" -print -quit)
 
 if [ ! -f /mnt/SDCARD/System/usr/trimui/scripts/update_common.sh ]; then 
@@ -80,19 +102,62 @@ mv "$BCK_DIR/RetroArch/.retroarch/system/"* "/mnt/SDCARD/BIOS" 2>/dev/null
 sync
 
 echo "${BLUE}=============  Decompressing new CrossMix archive, please wait...  =============${NC}"
-# Install CrossMix new version
-echo "CrossMix archive decompression lasts at least 4 minutes."
+
+# Verify zip integrity via SHA256 if checksum file exists
+SHA256_FILE="${UPDATE_FILE}.sha256"
+if [ -f "$SHA256_FILE" ]; then
+    echo "Verifying update integrity..."
+    if command -v sha256sum >/dev/null 2>&1; then
+        expected=$(awk '{print $1}' "$SHA256_FILE")
+        actual=$(sha256sum "$UPDATE_FILE" | awk '{print $1}')
+    elif command -v sha1sum >/dev/null 2>&1; then
+        # Fallback: strip first field only, could be sha1 or sha256
+        expected=$(awk '{print $1}' "$SHA256_FILE")
+        actual=$(sha1sum "$UPDATE_FILE" | awk '{print $1}')
+    else
+        echo "${YELLOW}No checksum tool available, skipping verification${NC}"
+        expected=""
+        actual=""
+    fi
+    if [ -n "$expected" ] && [ "$actual" != "$expected" ]; then
+            echo -e "${RED}SHA256 verification FAILED!${NC}"
+            echo "Expected: $expected"
+            echo "Got:      $actual"
+            echo "The update file may be corrupted. Aborting update."
+            rollback_update "sha256_verify"
+        fi
+        echo -e "${GREEN}SHA256 verification OK${NC}"
+    fi
+fi
+
+# Count total files for progress display
+total_files=$(/tmp/7zz l "$UPDATE_FILE" | grep -c "\.\.\..*" 2>/dev/null || echo "?")
+echo "CrossMix archive contains ~$total_files files. Extraction lasts ~4 minutes."
 echo -e "\n\n     !!!!!! Please be patient  !!!!!! \n\n"
-/tmp/7zz x -aoa "$UPDATE_FILE" -o"/mnt/SDCARD"
+
+# Extract with progress counter
+count=0
+/tmp/7zz x -aoa "$UPDATE_FILE" -o"/mnt/SDCARD" 2>&1 | while IFS= read -r line; do
+    if echo "$line" | grep -q "^\- "; then
+        count=$((count + 1))
+        if [ $((count % 100)) -eq 0 ] && [ "$total_files" != "?" ]; then
+            pct=$((count * 100 / total_files))
+            echo "Progress: $count/$total_files ($pct%)"
+        fi
+    fi
+done
+extract_rc=${PIPESTATUS[0]}
 sync
 
-if [ $? -eq 0 ]; then
+if [ $extract_rc -eq 0 ]; then
   echo -e "${GREEN}CrossMix v$update_version extraction successful.${NC}"
-  # infoscreen.sh -m "CrossMix v$update_version extraction successful."
   mv "$UPDATE_FILE" "/mnt/SDCARD/_Updates"
+  if [ -f "$SHA256_FILE" ]; then
+      mv "$SHA256_FILE" "/mnt/SDCARD/_Updates"
+  fi
 else
-  echo -ne "${RED}CrossMix v$update_version extraction encountered errors.${NC}\n"
-  # infoscreen.sh -m "CrossMix v$update_version extraction encountered errors." -t 5
+  echo -ne "${RED}CrossMix v$update_version extraction FAILED (exit code: $extract_rc).${NC}\n"
+  rollback_update "extraction"
 fi
 
 echo "${BLUE}=====================  Restoring saves and savestates...  =====================${NC}"

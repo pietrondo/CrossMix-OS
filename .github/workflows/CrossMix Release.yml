@@ -48,11 +48,17 @@ jobs:
           shopt -s dotglob
           cd /home/runner/work/CrossMix-OS/CrossMix-OS
           zip -r "/home/runner/work/CrossMix-OS/CrossMix-OS_v${{ env.BUILD_VERSION }}.zip" ./*
+      - name: Generate SHA256 checksum
+        run: |
+          cd /home/runner/work/CrossMix-OS
+          sha256sum "CrossMix-OS_v${{ env.BUILD_VERSION }}.zip" > "CrossMix-OS_v${{ env.BUILD_VERSION }}.zip.sha256"
       - name: Create Release
         uses: marvinpinto/action-automatic-releases@latest
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           title: "CrossMix-OS v${{ env.BUILD_VERSION }}"
           prerelease: false
-          files: "/home/runner/work/CrossMix-OS/CrossMix-OS_v${{ env.BUILD_VERSION }}.zip"
+          files: |
+            /home/runner/work/CrossMix-OS/CrossMix-OS_v${{ env.BUILD_VERSION }}.zip
+            /home/runner/work/CrossMix-OS/CrossMix-OS_v${{ env.BUILD_VERSION }}.zip.sha256
           draft: true
