@@ -1,6 +1,7 @@
 #!/bin/sh
-export PATH="/mnt/SDCARD/System/usr/trimui/scripts/:/mnt/SDCARD/System/bin:$PM_DIR:${PATH:+:$PATH}"
-export LD_LIBRARY_PATH="/usr/trimui/lib:/mnt/SDCARD/System/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+set -u
+. /mnt/SDCARD/System/usr/trimui/scripts/env.sh
+export PATH="$PM_DIR:${PATH:+:$PATH}"
 
 # ANSI colors
 RED="\033[1;31m"

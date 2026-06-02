@@ -1,4 +1,5 @@
 #!/bin/sh
+set -e
 source /mnt/SDCARD/System/usr/trimui/scripts/update_common.sh
 
 cmd=$1
@@ -71,7 +72,7 @@ get_release_info() {
 
     # Github source api url
 
-    Release_assets_info=$(curl -k -s https://api.github.com/repos/$GITHUB_REPOSITORY/releases/latest)
+    Release_assets_info=$(curl -sS https://api.github.com/repos/$GITHUB_REPOSITORY/releases/latest)
 
     if echo "$Release_assets_info" | grep -q '"message": "Not Found"'; then
         rm "$updatedir/.CrossMixUpdateAvailable" 2>/dev/null

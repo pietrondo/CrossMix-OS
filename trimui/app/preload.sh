@@ -1,4 +1,5 @@
 #!/bin/sh
+set -u
 rm /tmp/nightmode
 UDISK_TIRMUI_DIR=/mnt/UDISK/trimui_dir
 SDCARD_TRIMUI_DIR=/mnt/SDCARD/trimui

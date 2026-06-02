@@ -1,6 +1,6 @@
 #!/bin/sh
-export PATH="/mnt/SDCARD/System/usr/trimui/scripts/:/mnt/SDCARD/System/bin:$PM_DIR:${PATH:+:$PATH}"
-export LD_LIBRARY_PATH="/usr/trimui/lib:/mnt/SDCARD/System/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+. /mnt/SDCARD/System/usr/trimui/scripts/env.sh
+export PATH="$PM_DIR:${PATH:+:$PATH}"
 
 # Check if the RomDir parameter is provided
 if [ -z "$1" ]; then

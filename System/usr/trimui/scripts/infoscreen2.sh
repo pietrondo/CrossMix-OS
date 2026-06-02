@@ -3,9 +3,7 @@ if [ -f "/tmp/infoscreen_disabled" ]; then
     exit
 fi
 
-# Set the library path
-PATH="/mnt/SDCARD/System/bin:$PATH"
-export LD_LIBRARY_PATH="/mnt/SDCARD/System/lib:/usr/trimui/lib:$LD_LIBRARY_PATH"
+. /mnt/SDCARD/System/usr/trimui/scripts/env.sh
 
 # Function to display usage
 usage() {

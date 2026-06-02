@@ -1,6 +1,6 @@
 #!/bin/sh
-export PATH="/mnt/SDCARD/System/bin:/mnt/SDCARD/System/usr/trimui/scripts:$PATH"
-export LD_LIBRARY_PATH="/mnt/SDCARD/System/lib:/usr/trimui/lib:$LD_LIBRARY_PATH"
+set -u
+. /mnt/SDCARD/System/usr/trimui/scripts/env.sh
 
 if ! pgrep "text_viewer" >/dev/null; then
     NC='\033[0m'   # No Color (Reset)
@@ -232,7 +232,7 @@ download_file() {
 
     # Download the file
     echo -e "\n${BLUE}==== Downloading: $display_name ====${NC}"
-    wget --no-check-certificate --quiet --show-progress -O "$temp_file" "$url"
+    wget --quiet --show-progress -O "$temp_file" "$url"
     if [ $? -eq 0 ] && [ -f "$temp_file" ]; then
         mv "$temp_file" "$destination_file"
         sync

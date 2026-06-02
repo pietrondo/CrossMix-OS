@@ -12,9 +12,6 @@ if [ -z "$1" ]; then
     exit
 fi
 
-export LD_LIBRARY_PATH="/mnt/SDCARD/System/lib:/usr/trimui/lib:$LD_LIBRARY_PATH"
-export PATH="/mnt/SDCARD/System/bin:$PATH"
-
 echo performance >/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
 
 
@@ -58,7 +55,7 @@ search_on_screenscraper() {
 
     while true; do
         # TODO : managing multithread for users who have it.
-        api_result=$(curl -k -s "$url")
+        api_result=$(curl -sS "$url")
         Head_api_result=$(echo "$api_result" | head -n 1)
 
         # Don't check art if max threads for leechers is used
@@ -469,7 +466,7 @@ for file in $(eval "find /mnt/SDCARD/Roms/$CurrentSystem -maxdepth 2 -type f \
         MediaURL=$(echo "$MediaURL" | sed 's/"$/\&maxwidth=400\&maxheight=580"/')
 
         # direct download triggers an error on Miyoo Mini Plus
-        #wget --no-check-certificate "$MediaURL" -P "/mnt/SDCARD/Roms/$CurrentSystem/Imgs" -O "$romNameNoExtension.png"
+        #wget "$MediaURL" -P "/mnt/SDCARD/Roms/$CurrentSystem/Imgs" -O "$romNameNoExtension.png"
 
         output_dir="/mnt/SDCARD/Imgs/$CurrentSystem"
         output_file="$output_dir/$romNameNoExtension.png"

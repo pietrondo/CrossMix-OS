@@ -1,14 +1,6 @@
 #!/bin/sh
 
-# Function used by "System Tools" app to update the MainUI folder which is currently browsed.
-# it allows to modify the MainUI current folder name during a script and go back in this new folder name
-# (otherwise you'll be in a MainUI folder which doesn't exist anymore which is broking the current database)
-# For example you're in System Tools -> "LEDS (Default)" section, you select LEDS -> "Battery Level",
-# The current section will be renamed: mainui_state_update.sh "LEDS" "Battery Level"
-
-# Export necessary environment variables
-export PATH="/mnt/SDCARD/System/bin:$PATH"
-export LD_LIBRARY_PATH="/mnt/SDCARD/System/lib:/usr/trimui/lib:$LD_LIBRARY_PATH"
+. /mnt/SDCARD/System/usr/trimui/scripts/env.sh
 
 mainui_state_update() {
     local label_str="$1"

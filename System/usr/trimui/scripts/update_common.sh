@@ -1,7 +1,7 @@
 #!/bin/sh
+set -u
 UPDATE_VERSION=1.0.0
-export PATH="/mnt/SDCARD/System/bin:/mnt/SDCARD/System/usr/trimui/scripts:$PATH"
-export LD_LIBRARY_PATH="/mnt/SDCARD/System/lib:/usr/trimui/lib:$LD_LIBRARY_PATH"
+. /mnt/SDCARD/System/usr/trimui/scripts/env.sh
 
 if [ "$1" == "-v" ]; then
     echo -n $UPDATE_VERSION
@@ -132,6 +132,51 @@ EOL
     fi
 }
 
+verify_sha1() {
+    local file="$1"
+    local expected="$2"
+    if [ ! -f "$file" ]; then
+        return 1
+    fi
+    local actual
+    actual=$(sha1sum "$file" | awk '{print $1}')
+    [ "$actual" = "$expected" ]
+}
+
+download_and_verify() {
+    local url="$1"
+    local sha1_url="${url}.sha1"
+    local output="$2"
+    local tmp_script="${output}.tmp"
+    local tmp_sha1="${output}.sha1.tmp"
+
+    # Download script
+    if ! curl -sS -o "$tmp_script" "$url"; then
+        echo "Failed to download: $url"
+        rm -f "$tmp_script"
+        return 1
+    fi
+
+    # Download checksum
+    if ! curl -sS -o "$tmp_sha1" "$sha1_url"; then
+        echo "No SHA1 checksum available for: $url"
+        # Without checksum, refuse to execute (fail-safe)
+        rm -f "$tmp_script" "$tmp_sha1"
+        return 1
+    fi
+
+    expected=$(cat "$tmp_sha1" | awk '{print $1}')
+    if ! verify_sha1 "$tmp_script" "$expected"; then
+        echo "SHA1 verification FAILED for: $url"
+        rm -f "$tmp_script" "$tmp_sha1"
+        return 1
+    fi
+
+    mv "$tmp_script" "$output"
+    rm -f "$tmp_sha1"
+    return 0
+}
+
 ReadableSizeValue() {
     local size_bytes=$1
     local result
@@ -223,7 +268,7 @@ download_file() {
 
     # Download the file
     echo -e "\n${BLUE}==== Downloading: $display_name ====${NC}"
-    wget --no-check-certificate --quiet --show-progress -O "$temp_file" "$url"
+    wget --quiet --show-progress -O "$temp_file" "$url"
     if [ $? -eq 0 ] && [ -f "$temp_file" ]; then
         mv "$temp_file" "$destination_file"
         sync

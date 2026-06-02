@@ -1,4 +1,5 @@
 #!/bin/sh
+set -u
 
 UPDATE_FILE=$(find /mnt/SDCARD -maxdepth 1 -name "CrossMix-OS_v*.zip" -print -quit)
 

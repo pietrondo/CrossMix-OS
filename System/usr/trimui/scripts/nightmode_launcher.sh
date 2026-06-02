@@ -1,6 +1,5 @@
 #!/bin/sh
-export LD_LIBRARY_PATH="/usr/trimui/lib:$LD_LIBRARY_PATH"
-PATH="/mnt/SDCARD/System/bin:$PATH"
+. /mnt/SDCARD/System/usr/trimui/scripts/env.sh
 
 if [ "$1" = "osd" ]; then
     NightMode=$(/mnt/SDCARD/System/bin/jq -r '.["NightMode_OSD"]' "/mnt/SDCARD/System/etc/crossmix.json")

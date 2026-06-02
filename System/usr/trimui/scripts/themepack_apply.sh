@@ -1,8 +1,6 @@
 #!/bin/sh
 
-# Export necessary environment variables
-export PATH="/mnt/SDCARD/System/bin:$PATH"
-export LD_LIBRARY_PATH="/mnt/SDCARD/System/lib:/usr/trimui/lib:$LD_LIBRARY_PATH"
+. /mnt/SDCARD/System/usr/trimui/scripts/env.sh
 
 # Update theme pack in CrossMix configuration
 if [ -n "$packname" ] && [ -n "$style" ]; then

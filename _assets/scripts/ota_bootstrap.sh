@@ -1,6 +1,6 @@
 #!/bin/sh
-export PATH="/mnt/SDCARD/System/bin:/mnt/SDCARD/System/usr/trimui/scripts:$PATH"
-export LD_LIBRARY_PATH="/mnt/SDCARD/System/lib:/usr/trimui/lib:$LD_LIBRARY_PATH"
+set -u
+. /mnt/SDCARD/System/usr/trimui/scripts/env.sh
 
 CommonUpdateScript="/mnt/SDCARD/System/usr/trimui/scripts/update_common.sh"
 currentUpdatePack=$("$CommonUpdateScript" -v)

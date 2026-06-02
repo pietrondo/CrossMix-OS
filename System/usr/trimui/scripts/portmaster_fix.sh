@@ -1,6 +1,7 @@
 #!/bin/sh
-export PATH="/mnt/SDCARD/System/usr/trimui/scripts/:/mnt/SDCARD/System/bin:/usr/trimui/bin:$PATH"
-export LD_LIBRARY_PATH="/mnt/SDCARD/System/lib:/mnt/SDCARD/Apps/PortMaster/PortMaster:/usr/trimui/lib:$LD_LIBRARY_PATH"
+. /mnt/SDCARD/System/usr/trimui/scripts/env.sh
+export PATH="/usr/trimui/bin:$PATH"
+export LD_LIBRARY_PATH="/mnt/SDCARD/Apps/PortMaster/PortMaster:$LD_LIBRARY_PATH"
 
 NONE='\033[0m'
 RED='\033[01;31m'

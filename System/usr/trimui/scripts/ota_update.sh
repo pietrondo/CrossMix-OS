@@ -1,8 +1,17 @@
 #!/bin/sh
+set -u
 source /mnt/SDCARD/System/usr/trimui/scripts/update_common.sh
 
 run_bootstrap() {
-	curl -k -s https://raw.githubusercontent.com/$GITHUB_REPOSITORY/main/_assets/scripts/ota_bootstrap.sh | sh
+	url="https://raw.githubusercontent.com/$GITHUB_REPOSITORY/main/_assets/scripts/ota_bootstrap.sh"
+	bootstrap_tmp="/tmp/ota_bootstrap.sh"
+	if download_and_verify "$url" "$bootstrap_tmp"; then
+		sh "$bootstrap_tmp"
+		rm -f "$bootstrap_tmp"
+	else
+		echo -e "${RED}Failed to verify ota_bootstrap.sh${NC}"
+		exit 1
+	fi
 }
 
 main() {
@@ -24,7 +33,13 @@ main() {
 
 			echo -e "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n" >>"$updatedir/ota_hotfix.log"
 			echo -e "${timestamp}\n" >>"$updatedir/ota_hotfix.log"
-			curl -k -s "$url" | sh | tee -a "$updatedir/ota_hotfix.log"
+			hotfix_tmp="/tmp/ota_hotfix.sh"
+			if download_and_verify "$url" "$hotfix_tmp"; then
+				sh "$hotfix_tmp" | tee -a "$updatedir/ota_hotfix.log"
+				rm -f "$hotfix_tmp"
+			else
+				echo -e "${RED}Failed to verify hotfix${NC}" | tee -a "$updatedir/ota_hotfix.log"
+			fi
 
 		else
 			clear

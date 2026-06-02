@@ -1,4 +1,5 @@
 #!/bin/sh
+set -eu
 # Silent background update checker for CrossMix-OS
 # - Runs at boot in background
 # - No UI output; logs to $updatedir/update_check.log
@@ -54,7 +55,7 @@ EOF
 
 # Check major release availability from GitHub releases
 check_major_release() {
-    release_json=$(curl -k -s "https://api.github.com/repos/$GITHUB_REPOSITORY/releases/latest")
+    release_json=$(curl -sS "https://api.github.com/repos/$GITHUB_REPOSITORY/releases/latest")
     if echo "$release_json" | grep -q '"message": "Not Found"'; then
         log "No GitHub releases found."
         rm -f "$RELEASE_META"
@@ -114,7 +115,7 @@ check_hotfix() {
         return 1
     fi
 
-    content=$(curl -k -s "$url") || {
+    content=$(curl -sS "$url") || {
         rm -f "$HOTFIX_META"
         return 1
     }
