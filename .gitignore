@@ -4,3 +4,5 @@
 *.db
 .beads-credential-key
 graphify-out/
+*.zip
+*.sha256
