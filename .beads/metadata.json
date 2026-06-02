@@ -1,0 +1,7 @@
+{
+  "database": "dolt",
+  "backend": "dolt",
+  "dolt_mode": "embedded",
+  "dolt_database": "CrossMix_OS",
+  "project_id": "45ebca54-7786-4daf-8fcf-0a47a5a61d89"
+}
