@@ -6,7 +6,7 @@ _Get the best from your TrimUI Smart Pro_
 
 
 <div align="center">
-  <a href="https://github.com/cizia64/CrossMix-OS/releases/latest">
+  <a href="https://github.com/pietrondo/CrossMix-OS/releases/latest">
     <img src="_assets/readme/download.png" alt="Download" style="width: 300px;">
   </a>
 </div>
@@ -49,33 +49,49 @@ First take a look to CrossMix Wiki, below are the different sections:
 
 &nbsp;<br/>
 
-## 🏠[Home](https://github.com/cizia64/CrossMix-OS/wiki/Home)
+## 🏠[Home](https://github.com/pietrondo/CrossMix-OS/wiki/Home)
 
-## 🛠️ [Installation](https://github.com/cizia64/CrossMix-OS/wiki/Installation)
+## 🛠️ [Installation](https://github.com/pietrondo/CrossMix-OS/wiki/Installation)
 
-## 🎮 [Emulators](https://github.com/cizia64/CrossMix-OS/wiki/Emulators)
+## 🎮 [Emulators](https://github.com/pietrondo/CrossMix-OS/wiki/Emulators)
 
-## <img src="https://avatars.githubusercontent.com/u/96267164?s=200&v=4" width="20"> [PortMaster](https://github.com/cizia64/CrossMix-OS/wiki/PortMaster)
+## <img src="https://avatars.githubusercontent.com/u/96267164?s=200&v=4" width="20"> [PortMaster](https://github.com/pietrondo/CrossMix-OS/wiki/PortMaster)
 
-## :iphone: [Apps](https://github.com/cizia64/CrossMix-OS/wiki/apps)
+## :iphone: [Apps](https://github.com/pietrondo/CrossMix-OS/wiki/apps)
 
-## ⌨️ [Shortcuts](https://github.com/cizia64/CrossMix-OS/wiki/shortcuts)
+## ⌨️ [Shortcuts](https://github.com/pietrondo/CrossMix-OS/wiki/shortcuts)
 
-## ❔ [FAQ](https://github.com/cizia64/CrossMix-OS/wiki/FAQ)
+## ❔ [FAQ](https://github.com/pietrondo/CrossMix-OS/wiki/FAQ)
 
-## 🔄 [Updating CrossMix-OS](https://github.com/cizia64/CrossMix-OS/wiki/Updating)
+## 🔄 [Updating CrossMix-OS](https://github.com/pietrondo/CrossMix-OS/wiki/Updating)
 
 Three ways to get the latest version:
 
-1. **Updates App** (SD card, no WiFi needed): Download `CrossMix-OS_v*.zip` from [Releases](https://github.com/cizia64/CrossMix-OS/releases/latest) on your PC, copy to SD root, then open **Apps > Updates** on your device.
+1. **Updates App** (SD card, no WiFi needed): Download `CrossMix-OS_v*.zip` from [Releases](https://github.com/pietrondo/CrossMix-OS/releases/latest) on your PC, copy to SD root, then open **Apps > Updates** on your device. The update is verified with SHA256 before installation, and automatically rolls back if something goes wrong.
 2. **OTA Update** (WiFi required): Connect to WiFi, then open **Apps > OTA update**.
 3. **Auto-detection at boot**: If a `CrossMix-OS_v*.zip` is on the SD root, the system prompts to install at boot.
 
-## 🔧 [Advanced Guides](https://github.com/cizia64/CrossMix-OS/wiki/Advanced-Guides)
+## 🔧 [Advanced Guides](https://github.com/pietrondo/CrossMix-OS/wiki/Advanced-Guides)
 
-## 🛈 [About](https://github.com/cizia64/CrossMix-OS/wiki/About)
+## 🛈 [About](https://github.com/pietrondo/CrossMix-OS/wiki/About)
 
-## 🎁 [Contributing](https://github.com/cizia64/CrossMix-OS/wiki/Contributing)
+## 🎁 [Contributing](https://github.com/pietrondo/CrossMix-OS/wiki/Contributing)
+
+&nbsp;<br/>
+
+## 📋 Changelog
+
+### v1.5.0 - CrossMix-Pit Edition
+- **Rollback automatico**: se l'update fallisce, il sistema ripristina automaticamente la versione precedente
+- **SHA256 verification**: ogni zip di release ha un checksum `.sha256` verificato prima dell'installazione
+- **Progress bar**: conteggio file in tempo reale durante l'estrazione
+- **CI/CD**: checksum SHA256 generato automaticamente per ogni release
+
+### v1.4.0
+- **Apps/Updates**: nuova app per aggiornamento offline da SD (senza WiFi)
+- **Sicurezza**: TLS enforcement, SHA1 verification, rimozione `curl -k`
+- **Robustezza**: `set -u` su 9 script core, `env.sh` centralizzato
+- **RetroArch**: 132 core aggiornati da upstream aarch64
 
 &nbsp;<br/>&nbsp;<br/>
 
@@ -123,7 +139,7 @@ I have more ideas and improvements for this project, and you might have some too
 
 Contribute to this repo by making a Pull Request. If you have an improvement to propose and don't know how to use GitHub, send me a message!
 
-Feel free to reach out to me to report bugs, request features, or just chat on **[Discord](https://discord.gg/Jd2azKX)** or on **[Github Issues](https://github.com/cizia64/CrossMix-OS/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc)**
+Feel free to reach out to me to report bugs, request features, or just chat on **[Discord](https://discord.gg/Jd2azKX)** or on **[Github Issues](https://github.com/pietrondo/CrossMix-OS/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc)**
 
 If you enjoy my work and want to support the countless hours/days invested, here are my sponsors:
 

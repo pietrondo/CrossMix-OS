@@ -1,0 +1,1 @@
+{"label":"SEGA SMS","launch":"launch.sh","rompath":"../../Roms/SMS","extlist":"sms|gg|sg|bin|zip|7z","launchlist":[{"name":"SMS Plus GX","launch":"smsplus.sh"}]}
