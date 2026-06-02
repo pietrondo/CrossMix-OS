@@ -81,17 +81,23 @@ Three ways to get the latest version:
 
 ## 📋 Changelog
 
-### v1.5.0 - CrossMix-Pit Edition
-- **Rollback automatico**: se l'update fallisce, il sistema ripristina automaticamente la versione precedente
-- **SHA256 verification**: ogni zip di release ha un checksum `.sha256` verificato prima dell'installazione
-- **Progress bar**: conteggio file in tempo reale durante l'estrazione
-- **CI/CD**: checksum SHA256 generato automaticamente per ogni release
+### v1.6.0 - CrossMix-Pit Edition
+- **Firmware 1.1.1**: piena compatibilita' con l'ultimo TrimUI stock firmware
+- **8 nuovi core**: bsnes, doukutsu_rs, emuscv, mednafen_psx_hw, smsplus, onsyuri, libgametank, puzzlescript
+- **SMS (Sega Master System)**: nuovo emulatore con core smsplus
+- **19 core grandi**: scaricati automaticamente da upstream nella release zip (MAME, Flycast, FB Neo, etc.)
+- **`make_release.ps1`**: script PowerShell per costruire lo zip release con tutti i core
+- **`download_cores.sh`**: script on-device per aggiornare i core
+- **Test automatizzati**: `tests/run_tests.sh` per verifica funzioni critiche
+- Rimossi emulatori non richiesti (Apple II, J2ME, Vircon32)
+
+### v1.5.0
+- Rollback automatico, SHA256 verification, progress bar durante estrazione
+- CI/CD: checksum SHA256 generato per ogni release
 
 ### v1.4.0
-- **Apps/Updates**: nuova app per aggiornamento offline da SD (senza WiFi)
-- **Sicurezza**: TLS enforcement, SHA1 verification, rimozione `curl -k`
-- **Robustezza**: `set -u` su 9 script core, `env.sh` centralizzato
-- **RetroArch**: 132 core aggiornati da upstream aarch64
+- Apps/Updates, sicurezza TLS, SHA1 verification, set -u, env.sh centralizzato
+- 132 core RetroArch aggiornati da upstream aarch64
 
 &nbsp;<br/>&nbsp;<br/>
 
