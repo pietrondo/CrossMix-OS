@@ -6,3 +6,5 @@
 graphify-out/
 *.zip
 *.sha256
+
+*.so

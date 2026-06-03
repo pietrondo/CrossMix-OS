@@ -63,6 +63,11 @@ if [ -f ./tests/scraper_state.test.sh ]; then
     sh ./tests/scraper_state.test.sh
 fi
 echo ""
+echo "=== hooks + logging tests ==="
+if [ -f ./tests/hooks_logging.test.sh ]; then
+    sh ./tests/hooks_logging.test.sh
+fi
+echo ""
 echo "=== scraper integration tests ==="
 if [ -f ./tests/scraper_integration.sh ]; then
     sh ./tests/scraper_integration.sh

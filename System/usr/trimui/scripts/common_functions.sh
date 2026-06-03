@@ -339,3 +339,24 @@ else
     exit 1
 fi
 }
+
+# ── CrossMix-OS Hooks & Logging ──
+HOOKS_BASE="${HOOKS_BASE:-/mnt/SDCARD/System/usr/trimui/hooks}"
+LOGDIR="${LOGDIR:-/mnt/SDCARD/System/var/logs}"
+
+run_hooks() {
+    local stage="$1"  # pre-launch | post-launch
+    local emu="$2"
+    for d in "$HOOKS_BASE/$stage.d" "$HOOKS_BASE/$emu/$stage.d"; do
+        [ -d "$d" ] && for f in "$d"/*.sh; do
+            [ -x "$f" ] && . "$f"
+        done
+    done
+    return 0
+}
+
+log_message() {
+    local tag="${1:-unknown}"; shift
+    mkdir -p "$LOGDIR"
+    printf '[%s] [%s] %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$tag" "$*" >> "$LOGDIR/crossmix.log"
+}
