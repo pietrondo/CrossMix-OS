@@ -19,6 +19,30 @@ Get-ChildItem $ReleaseDir -Recurse -Filter ".gitignore" | Remove-Item -Force
 Remove-Item -Recurse -Force "$ReleaseDir\RetroArch\.retroarch\cores\*.so" -ErrorAction SilentlyContinue
 Remove-Item -Recurse -Force "$ReleaseDir\RetroArch\.retroarch\cores\*.7z" -ErrorAction SilentlyContinue
 
+# Exclude heavy RetroArch theme assets (keep ozone only)
+if (Test-Path "$ReleaseDir\RetroArch\.retroarch\assets") {
+    Remove-Item -Recurse -Force "$ReleaseDir\RetroArch\.retroarch\assets\xmb" -ErrorAction SilentlyContinue
+    Remove-Item -Recurse -Force "$ReleaseDir\RetroArch\.retroarch\assets\switch" -ErrorAction SilentlyContinue
+    Remove-Item -Recurse -Force "$ReleaseDir\RetroArch\.retroarch\assets\glui" -ErrorAction SilentlyContinue
+}
+
+# Exclude PortMaster themes (huge, non-critical)
+Remove-Item -Recurse -Force "$ReleaseDir\Apps\PortMaster\PortMaster\themes" -ErrorAction SilentlyContinue
+
+# Exclude old ScummVM extras
+Remove-Item -Force "$ReleaseDir\Emus\SCUMMVM\ScummVM\scummvm.7z" -ErrorAction SilentlyContinue
+
+# Exclude non-essential apps and assets
+Remove-Item -Recurse -Force "$ReleaseDir\Apps\EbookReader" -ErrorAction SilentlyContinue
+Remove-Item -Recurse -Force "$ReleaseDir\Apps\BootLogo\Images_1024x768" -ErrorAction SilentlyContinue
+
+# Keep only CrossMix + Stock boot logos (remove all others to save space)
+if (Test-Path "$ReleaseDir\Apps\BootLogo\Images_1280x720") {
+    Get-ChildItem "$ReleaseDir\Apps\BootLogo\Images_1280x720" -File | Where-Object {
+        $_.Name -notlike "*Crossmix*" -and $_.Name -notlike "*CrossMix*" -and $_.Name -notlike "*Default Trimui*" -and $_.Name -notlike "*Pit*"
+    } | Remove-Item -Force
+}
+
 Write-Host "Compressing..." -ForegroundColor Yellow
 Compress-Archive -Path "$ReleaseDir\*" -DestinationPath $OutZip -CompressionLevel Fastest
 $size = [math]::Round((Get-Item $OutZip).Length / 1MB, 0)
