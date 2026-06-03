@@ -36,6 +36,10 @@
     {
       "name": "Flycast - v2.4 (RetroAchievem.)",
       "launch": "flycast_standalone_v2.4.sh"
+    },
+    {
+      "name": "Flycast - v2.6 (OpenGL ES)",
+      "launch": "flycast_standalone_v2.6.sh"
     }
   ]
 }
