@@ -92,7 +92,8 @@ if [ $sr -ne 0 ] || ! [ "$gameIDSS" -eq "$gameIDSS" ] 2>/dev/null; then
     [ $rs -gt 419430400 ] && { echo "too big for checksum"; scraper_state_mark_failed "$EMU" "$romName" "too_big"; exit 1; }
     ck=$(sha1sum "$ROM_PATH"|awk '{print $1}')
     url="https://www.screenscraper.fr/api2/jeuInfos.php?devid=${u%?}&devpassword=${p#??}&softname=crossmix&output=json&ssid=${userSS}&sspassword=${passSS}&sha1=${ck}&systemeid=&romtype=rom&romnom=${tw}.zip&romtaille=${rs}"
-    search_ss || { scraper_state_mark_failed "$EMU" "$romName" "no_match"; exit 1; }
+    search_ss; sr=$?
+    [ $sr -ne 0 ] && { scraper_state_mark_failed "$EMU" "$romName" "no_match"; exit $sr; }
 fi
 echo "gameID = $gameIDSS"
 
