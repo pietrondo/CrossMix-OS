@@ -43,6 +43,30 @@ if (Test-Path "$ReleaseDir\Apps\BootLogo\Images_1280x720") {
     } | Remove-Item -Force
 }
 
+# Keep only essential themes (CrossMix + TRIMUI Blue + Epic Noir + Burst!)
+if (Test-Path "$ReleaseDir\Themes") {
+    Get-ChildItem "$ReleaseDir\Themes" -Directory | Where-Object {
+        $_.Name -notlike "CrossMix*" -and $_.Name -notlike "TRIMUI Blue" -and $_.Name -notlike "Epic Noir" -and $_.Name -notlike "Burst!"
+    } | Remove-Item -Recurse -Force
+}
+
+# Keep only Default + Burst! icon packs
+if (Test-Path "$ReleaseDir\Icons") {
+    Get-ChildItem "$ReleaseDir\Icons" -Directory | Where-Object {
+        $_.Name -notlike "Default" -and $_.Name -notlike "Burst!"
+    } | Remove-Item -Recurse -Force
+}
+
+# Keep only Default + Burst! backgrounds
+if (Test-Path "$ReleaseDir\Backgrounds") {
+    Get-ChildItem "$ReleaseDir\Backgrounds" -Directory | Where-Object {
+        $_.Name -notlike "Default" -and $_.Name -notlike "Burst!"
+    } | Remove-Item -Recurse -Force
+}
+
+# PortMaster: keep only launch script, remove heavy assets
+Remove-Item -Recurse -Force "$ReleaseDir\Apps\PortMaster\PortMaster" -ErrorAction SilentlyContinue
+
 Write-Host "Compressing..." -ForegroundColor Yellow
 Compress-Archive -Path "$ReleaseDir\*" -DestinationPath $OutZip -CompressionLevel Fastest
 $size = [math]::Round((Get-Item $OutZip).Length / 1MB, 0)
