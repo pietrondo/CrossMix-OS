@@ -8,6 +8,6 @@ LAST_VER=$(cat "$FLAG" 2>/dev/null || echo "0")
 
 if [ "$CUR_VER" != "$LAST_VER" ]; then
     echo "Running first-time setup for $CUR_VER..."
-    sh /mnt/SDCARD/System/usr/trimui/scripts/setup.sh 2>/dev/null
+    sh /mnt/SDCARD/System/usr/trimui/scripts/setup.sh --full 2>/dev/null
     echo "$CUR_VER" > "$FLAG"
 fi

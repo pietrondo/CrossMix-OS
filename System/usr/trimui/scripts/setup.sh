@@ -54,7 +54,7 @@ else
 fi
 
 # 5. Strip core symbols (optional, saves 30-50% space)
-echo "[5/6] Core optimization..."
+echo "[5/7] Core optimization..."
 if [ "$FULL" = "true" ]; then
     CORES_COUNT=$(ls /mnt/SDCARD/RetroArch/.retroarch/cores/*.so 2>/dev/null | wc -l)
     echo "  $CORES_COUNT cores detected."
@@ -64,8 +64,13 @@ else
     echo "  Run 'sh core_strip.sh' later to strip debug symbols."
 fi
 
-# 6. Log initial system state
-echo "[6/6] Logging system state..."
+# 6. Probe display capabilities (for future display controls)
+echo "[6/7] Probing display..."
+sh /mnt/SDCARD/System/usr/trimui/scripts/display_probe.sh > /mnt/SDCARD/System/var/display_probe.txt 2>/dev/null
+echo "  Results saved to System/var/display_probe.txt"
+
+# 7. Log initial system state
+echo "[7/7] Logging system state..."
 VER=$(cat /mnt/SDCARD/System/usr/trimui/crossmix-version.txt 2>/dev/null || echo "?")
 DISK=$(df -h /mnt/SDCARD | tail -1 | awk '{print $4" free of "$2}')
 RAM=$(free -m | awk '/Mem:/ {print $2"MB"}')

@@ -16,6 +16,7 @@ cat /proc/cpuinfo > "$T/cpuinfo.txt" 2>/dev/null
 free > "$T/meminfo.txt" 2>/dev/null
 df -h > "$T/disk.txt" 2>/dev/null
 uname -a > "$T/uname.txt" 2>/dev/null
+cp /mnt/SDCARD/System/var/display_probe.txt "$T/display_probe.txt" 2>/dev/null
 
 tar -czf "$OUT" -C "$T" . 2>/dev/null
 rm -rf "$T"
