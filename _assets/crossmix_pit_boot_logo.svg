@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720">
+  <defs>
+    <!-- Glow filter -->
+    <filter id="cyanGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    <filter id="fireGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="12" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <!-- Cyan gradient -->
+    <linearGradient id="cyanGrad" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#00B4D8"/>
+      <stop offset="50%" stop-color="#48CAE4"/>
+      <stop offset="100%" stop-color="#90E0EF"/>
+    </linearGradient>
+    <!-- Fire gradient -->
+    <linearGradient id="fireGrad" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#FF6B00"/>
+      <stop offset="50%" stop-color="#FF8C00"/>
+      <stop offset="100%" stop-color="#FFD000"/>
+    </linearGradient>
+    <!-- Background gradient -->
+    <radialGradient id="bgGrad" cx="50%" cy="60%">
+      <stop offset="0%" stop-color="#1a1a2e"/>
+      <stop offset="100%" stop-color="#0a0a15"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1280" height="720" fill="url(#bgGrad)"/>
+
+  <!-- Subtle grid lines (tech feel) -->
+  <g opacity="0.05" stroke="#00B4D8">
+    <line x1="0" y1="360" x2="1280" y2="360" stroke-width="1"/>
+    <line x1="640" y1="0" x2="640" y2="720" stroke-width="1"/>
+  </g>
+
+  <!-- Diamond with Cross icon (center) -->
+  <g transform="translate(640, 280)">
+    <!-- Outer glow ring -->
+    <circle cx="0" cy="0" r="75" fill="none" stroke="#00B4D8" stroke-width="1" opacity="0.3"/>
+    <circle cx="0" cy="0" r="85" fill="none" stroke="#00B4D8" stroke-width="0.5" opacity="0.15"/>
+
+    <!-- Diamond shape -->
+    <rect x="-45" y="-45" width="90" height="90" rx="4" fill="#0d0d20" stroke="#00B4D8" stroke-width="2" transform="rotate(45)" opacity="0.9"/>
+
+    <!-- Cross inside diamond -->
+    <g filter="url(#cyanGlow)" stroke="url(#cyanGrad)" stroke-width="5" stroke-linecap="round">
+      <line x1="-22" y1="0" x2="22" y2="0"/>
+      <line x1="0" y1="-22" x2="0" y2="22"/>
+    </g>
+  </g>
+
+  <!-- Fire embers (pit theme) -->
+  <g filter="url(#fireGlow)" opacity="0.6">
+    <!-- Embers rising from below -->
+    <circle cx="590" cy="420" r="2" fill="#FF8C00" opacity="0.6"/>
+    <circle cx="620" cy="400" r="1.5" fill="#FFD000" opacity="0.4"/>
+    <circle cx="660" cy="410" r="2.5" fill="#FF6B00" opacity="0.5"/>
+    <circle cx="680" cy="390" r="1" fill="#FFD000" opacity="0.35"/>
+    <circle cx="610" cy="430" r="2" fill="#FF8C00" opacity="0.7"/>
+    <circle cx="650" cy="435" r="1.5" fill="#FF6B00" opacity="0.5"/>
+    <circle cx="700" cy="415" r="1" fill="#FFD000" opacity="0.3"/>
+    <circle cx="570" cy="425" r="1.5" fill="#FF8C00" opacity="0.4"/>
+    <circle cx="695" cy="440" r="2" fill="#FF6B00" opacity="0.6"/>
+    <circle cx="640" cy="445" r="1" fill="#FFD000" opacity="0.3"/>
+  </g>
+
+  <!-- Fire glow at bottom -->
+  <ellipse cx="640" cy="440" rx="120" ry="15" fill="#FF6B00" opacity="0.08"/>
+  <ellipse cx="640" cy="440" rx="80" ry="8" fill="#FF8C00" opacity="0.12"/>
+
+  <!-- CROSSMIX text -->
+  <text x="640" y="540" text-anchor="middle" font-family="Orbitron, Rajdhani, 'Segoe UI', sans-serif" font-size="64" font-weight="700" fill="url(#cyanGrad)" filter="url(#cyanGlow)" letter-spacing="12">CROSSMIX</text>
+
+  <!-- PIT text -->
+  <text x="640" y="600" text-anchor="middle" font-family="Orbitron, Rajdhani, 'Segoe UI', sans-serif" font-size="32" font-weight="600" fill="#FF8C00" filter="url(#fireGlow)" letter-spacing="20">PIT</text>
+
+  <!-- Version line -->
+  <text x="640" y="645" text-anchor="middle" font-family="Orbitron, Rajdhani, 'Segoe UI', sans-serif" font-size="14" fill="#00B4D8" opacity="0.5" letter-spacing="6">EDITION</text>
+
+  <!-- Scan line effect (subtle) -->
+  <g opacity="0.03">
+    <pattern id="scanlines" width="1280" height="4" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="1280" y2="0" stroke="#00B4D8" stroke-width="1"/>
+    </pattern>
+    <rect width="1280" height="720" fill="url(#scanlines)"/>
+  </g>
+</svg>
