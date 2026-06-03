@@ -57,6 +57,17 @@ assert_eq "$?" "0" "crossmix-version.txt exists"
 [ -f /mnt/SDCARD/System/usr/trimui/scripts/env.sh ]
 assert_eq "$?" "0" "env.sh exists"
 
+echo ""
+echo "=== scraper_state tests ==="
+if [ -f ./tests/scraper_state.test.sh ]; then
+    sh ./tests/scraper_state.test.sh
+fi
+echo ""
+echo "=== scraper integration tests ==="
+if [ -f ./tests/scraper_integration.sh ]; then
+    sh ./tests/scraper_integration.sh
+fi
+
 rm -rf "$TMP"
 
 echo ""
