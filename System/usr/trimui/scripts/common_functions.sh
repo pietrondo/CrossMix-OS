@@ -347,6 +347,7 @@ LOGDIR="${LOGDIR:-/mnt/SDCARD/System/var/logs}"
 run_hooks() {
     local stage="$1"  # pre-launch | post-launch
     local emu="$2"
+    HOOK_STAGE="$stage" HOOK_EMU="$emu"
     for d in "$HOOKS_BASE/$stage.d" "$HOOKS_BASE/$emu/$stage.d"; do
         [ -d "$d" ] && for f in "$d"/*.sh; do
             [ -x "$f" ] && . "$f"

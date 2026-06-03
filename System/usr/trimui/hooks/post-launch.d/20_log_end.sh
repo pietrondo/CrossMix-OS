@@ -1,3 +1,3 @@
 #!/bin/sh
 # Hook: Log game launch end
-log_message "launch" "game ended on $2"
+log_message "launch" "game ended on ${HOOK_EMU:-?}"
