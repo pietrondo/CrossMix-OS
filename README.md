@@ -1,6 +1,6 @@
 <div align="center">
-    <img src="_assets/readme/TSP-Logo.png">
-    
+    <img src="_assets/crossmix_pit_boot_logo.svg" width="600">
+
 _Get the best from your TrimUI Smart Pro_  
 </div>
 
@@ -80,6 +80,27 @@ Three ways to get the latest version:
 &nbsp;<br/>
 
 ## 📋 Changelog
+
+### v1.7.1 - CrossMix-Pit Edition
+- **Toolbox App**: dashboard unificata (health check, export debug, backup salvataggi, cheat, dedup core)
+- **Game Switcher**: quick-switch tra giochi recenti (via Apps)
+- **Hooks system** (18 hook boot/pre/post): CPU scaling, audio quality, RetroAchievements, NTP sync, battery history, game time tracker, log rotation, auto-backup, low battery alert
+- **Scraper multithread**: parallel scraping via xargs -P (1-8 workers), resume dopo interrupt, retry migliorato
+- **Logging centralizzato**: `log_message()`, `gather_logs.sh`, `log_manager.sh` (view/clear/export)
+- **RetroAchievements**: integrazione automatica via hook
+- **Battery + Game stats**: storico SQLite con trend, `battery_stats.sh` e `game_stats.sh`
+- **Cheats**: download automatico database cheat da RetroArch buildbot
+- **Boot logo Cross-Pit**: nuovo logo con tema "pit" (fuoco + ciano)
+- **CJK font**: supporto titoli asiatici (cinese/giapponese/coreano)
+- **Save backup**: backup/restore automatico salvataggi e stati
+- **CrossMix Doctor**: health check completo (18 validazioni)
+- **Core tools**: `core_strip.sh` (-30/50% spazio), `core_dedup.sh` (analisi ridondanti)
+- **Flycast v2.6 standalone**: integrato per DC/NAOMI/ATOMISWAVE (OpenGL ES, per-pixel rendering)
+- **Primo avvio automatico**: `setup.sh --full` eseguito automaticamente a ogni update
+- **16 tool script**: gather_logs, log_manager, battery_stats, game_stats, cheats_update, display_probe, core_strip, core_dedup, cjk_font, setup, doctor, save_backup, scrap_worker/master/state
+
+### v1.7.0 - CrossMix-Pit Edition
+- Atomic update + MAME fix + wget resume + .info files
 
 ### v1.6.0 - CrossMix-Pit Edition
 - **Firmware 1.1.1**: piena compatibilita' con l'ultimo TrimUI stock firmware
