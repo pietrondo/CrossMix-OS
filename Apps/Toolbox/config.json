@@ -1,0 +1,7 @@
+{
+  "label": "Toolbox",
+  "icon": "icon.png",
+  "iconsel": "icon.png",
+  "launch": "launch.sh",
+  "description": "System tools: logs, backup, health, cheats"
+}
