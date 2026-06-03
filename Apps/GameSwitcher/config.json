@@ -1,0 +1,7 @@
+{
+  "label": "Game Switcher",
+  "icon": "icon.png",
+  "iconsel": "icon.png",
+  "launch": "launch.sh",
+  "description": "Quick-switch between recent games"
+}
