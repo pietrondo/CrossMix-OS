@@ -7,7 +7,7 @@
 
 set -u
 
-SCRAPER_STATE_DIR="/mnt/SDCARD/System/var/scraper_state"
+SCRAPER_STATE_DIR="${SCRAPER_STATE_DIR:-/mnt/SDCARD/System/var/scraper_state}"
 
 scraper_state_init() {
     local emu="$1"; mkdir -p "$SCRAPER_STATE_DIR/$emu" 2>/dev/null
