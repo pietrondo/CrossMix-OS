@@ -46,6 +46,7 @@ get_ssid() { case $1 in
     THOMSON) ssid="141";;  TIC) ssid="222";;  UZEBOX) ssid="216";;  VB) ssid="11";;
     VECTREX) ssid="102";;  VIC20) ssid="73";;  WSC|WS) ssid="45";;  X68000) ssid="79";;
     X1) ssid="220";;  ZXEIGHTYONE) ssid="77";;  ZXS) ssid="76";;
+    *) echo "Unknown platform: $1" >&2; exit 1;;
     esac; }
 
 # ── search API with retry ──
