@@ -73,6 +73,21 @@ if [ -f ./tests/scraper_integration.sh ]; then
     sh ./tests/scraper_integration.sh
 fi
 
+echo ""
+echo "=== script syntax checks ==="
+for script in \
+    System/usr/trimui/scripts/gather_logs.sh \
+    System/usr/trimui/scripts/log_manager.sh \
+    System/usr/trimui/scripts/battery_stats.sh \
+    System/usr/trimui/scripts/game_stats.sh \
+    System/usr/trimui/scripts/display_probe.sh \
+    System/usr/trimui/hooks/pre-launch.d/*.sh \
+    System/usr/trimui/hooks/post-launch.d/*.sh; do
+    if [ -f "$script" ]; then
+        bash -n "$script" 2>/dev/null && echo "  OK: $script" || echo "  SYNTAX ERROR: $script"
+    fi
+done
+
 rm -rf "$TMP"
 
 echo ""
