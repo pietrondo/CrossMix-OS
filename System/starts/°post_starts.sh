@@ -185,3 +185,10 @@ wifi_value=$(/usr/trimui/bin/systemval wifi)
 if [ "$wifi_value" -eq 1 ]; then
 	wifi_workaround &
 fi
+
+# ── CrossMix-OS Boot Hooks ──
+if [ -d /mnt/SDCARD/System/usr/trimui/hooks/boot.d ]; then
+    for f in /mnt/SDCARD/System/usr/trimui/hooks/boot.d/*.sh; do
+        [ -x "$f" ] && . "$f"
+    done
+fi
